@@ -1,1 +1,3 @@
-# piltide_haldur_py
+# Piltide haldur
+
+Meie projektiks on piltidehaldur, mis võimaldab valida kausta mitme failiga ja töödelda kõiki selle pilte korraga: muuta suurust, lõigata, lisada vesimärki ja rakendada filtreid. Peamine probleem on see, et mitme pildi ühesuguseks muutmine võtab palju aega ning seda saab oluliselt lihtsustada, kui kõik pildid töödeldakse korraga ühtse reegli järgi. Valisime selle projekti, sest näiteks dokumentatsioonide jaoks on sageli vaja kindla suurusega pilte ning nende käsitsi ühtseks muutmine on aeganõudev.
