@@ -1,9 +1,9 @@
 """
-Projekti teema: Bulk Image Resizer & Editor (Pildihaldur)
-Autorid: Loora Maria ja projektipartner
+Projekti teema: Bulk Image Resizer & Editor
+Autorid:  Marion Poljakov ja Loora Maria Pavlov
 Kirjeldus: Programmi graafiline kasutajaliides (Tkinter), mis võimaldab
            kasutajal valida piltide kausta ja rakendada mass-töötlust.
-Juhend: Käivita see fail Pythoni keskkonnas (`python vaade.py`).
+
 """
 
 import os
