@@ -4,40 +4,25 @@ Autorid:  Marion Poljakov ja Loora Maria Pavlov
 Kirjeldus: Programmi graafiline kasutajaliides (Tkinter), mis võimaldab
            kasutajal valida piltide kausta ja rakendada mass-töötlust.
 
+Alfaversioon: kasutusel on kaustade valik, laiuse muutmine ja halltoonid.
+Kõrgus ja vesimärk on liideses juba olemas, kuid lukustatud (tulevad beetas).
 """
 
 import os
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
-try:
+from haldur import tootle_kaust
 
-    from haldur import tootle_kaust
-except ImportError:
-    def tootle_kaust(
-        sisend_kaust,
-        valjund_kaust,
-        laius=None,
-        korgus=None,
-        vesimark=None,
-        halltoonid=False,
-    ):
-        pildid = [
-            f
-            for f in os.listdir(sisend_kaust)
-            if f.lower().endswith((".png", ".jpg", ".jpeg"))
-        ]
-        if not os.path.exists(valjund_kaust):
-            os.makedirs(valjund_kaust)
-        return len(pildid)
+ALFA_MARKUS = "(pole alfas)"
 
 
 class PildihaldurGUI:
 
     def __init__(self, root):
         self.root = root
-        self.root.title("Pildihaldur - Mass-töötlus")
-        self.root.geometry("520x480")
+        self.root.title("Pildihaldur - Mass-töötlus (alfa)")
+        self.root.geometry("520x520")
         self.root.resizable(False, False)
 
         self.sisend_kaust = tk.StringVar()
@@ -93,18 +78,26 @@ class PildihaldurGUI:
             row=1, column=1, sticky="w", padx=pad_x
         )
 
-        ttk.Label(seaded_frame, text="Kõrgus:").grid(
+        # Kõrgus: alfas ei kasutata, suurust muudetakse ainult laiuse järgi
+        ttk.Label(seaded_frame, text=f"Kõrgus {ALFA_MARKUS}:").grid(
             row=1, column=2, sticky="e", padx=pad_x
         )
-        ttk.Entry(seaded_frame, textvariable=self.korgus_var, width=8).grid(
-            row=1, column=3, sticky="w", padx=pad_x
-        )
-
-        ttk.Label(seaded_frame, text="Vesimärgi tekst:").grid(
-            row=2, column=0, sticky="w", padx=pad_x, pady=(10, 5)
-        )
         ttk.Entry(
-            seaded_frame, textvariable=self.vesimark_var, width=30
+            seaded_frame,
+            textvariable=self.korgus_var,
+            width=8,
+            state="disabled",
+        ).grid(row=1, column=3, sticky="w", padx=pad_x)
+
+        # Vesimärk: alfas ei kasutata
+        ttk.Label(
+            seaded_frame, text=f"Vesimärgi tekst {ALFA_MARKUS}:"
+        ).grid(row=2, column=0, sticky="w", padx=pad_x, pady=(10, 5))
+        ttk.Entry(
+            seaded_frame,
+            textvariable=self.vesimark_var,
+            width=30,
+            state="disabled",
         ).grid(row=2, column=1, columnspan=3, sticky="w", padx=pad_x, pady=(10, 5))
 
         ttk.Checkbutton(
@@ -113,6 +106,15 @@ class PildihaldurGUI:
             variable=self.halltoonid_var,
         ).grid(
             row=3, column=0, columnspan=4, sticky="w", padx=pad_x, pady=pad_y
+        )
+
+        ttk.Label(
+            seaded_frame,
+            text="Hallid väljad on tulevased funktsioonid, "
+            "alfaversioonis neid ei kasutata.",
+            font=("Arial", 8, "italic"),
+        ).grid(
+            row=4, column=0, columnspan=4, sticky="w", padx=pad_x, pady=pad_y
         )
 
         # 3. Käivitus ja olek
@@ -152,21 +154,15 @@ class PildihaldurGUI:
             messagebox.showerror("Viga", "Palun määratle väljundkaust!")
             return
 
+        # Alfas loetakse ainult laius; kõrgus ja vesimärk jäävad tühjaks
         laius = None
-        korgus = None
         if self.muuda_suurust_var.get():
             try:
                 laius = int(self.laius_var.get())
-                korgus = int(self.korgus_var.get())
             except ValueError:
-                messagebox.showerror(
-                    "Viga", "Laius ja kõrgus peavad olema täisarvud!"
-                )
+                messagebox.showerror("Viga", "Laius peab olema täisarv!")
                 return
 
-        vesimark = (
-            self.vesimark_var.get().strip() if self.vesimark_var.get() else None
-        )
         halltoonid = self.halltoonid_var.get()
 
         self.olek_label.config(text="Olek: Töötlen pilte...")
@@ -177,8 +173,8 @@ class PildihaldurGUI:
                 sisend_kaust=s_kaust,
                 valjund_kaust=v_kaust,
                 laius=laius,
-                korgus=korgus,
-                vesimark=vesimark,
+                korgus=None,
+                vesimark=None,
                 halltoonid=halltoonid,
             )
             self.olek_label.config(
