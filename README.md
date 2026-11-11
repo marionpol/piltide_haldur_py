@@ -17,17 +17,39 @@ Tkinteri graafilist kasutajaliidest. Hetkel on alfa versioon.
 Kõrguse ja vesimärgi väljad on vaate aknas olemas, kuid hallid ja lukustatud.
 Need tulevad järgmises versioonis.
 
-## Kasutamine
 
-Esiteks tuleb installida vajalik teek:
+### Paigaldamine
+Klooni see repo:
 ```bash
-python -m pip install -r requirements.txt
+git clone https://github.com/marionpol/piltide_haldur_py.git
 ```
 
-Käivita programm projekti kaustast:
+Oma terminalis või powerShellis liigu kausta `piltide_haldur_py` ning käivita järgnev:
+
+```bash
+python -m venv venv
+source venv/bin/activate
+python -m pip install -r teegid.txt
+```
+
+Mis need teevad?
+
+Esimene ja teine käsk loovad projekti oma Pythoni keskkonna, kuhu saab lisada projekti põhiste teekide versioone.
+
+Kolmas käsk lisab teegid koos versioonidega, mis on `teegid.txt` failis.
+
+## Kasutamine
+
+
+Käivita programm projekti kaustast terminalist:
 
 ```bash
 python vaade.py
+```
+või kui esimene ei tööta
+
+```bash
+python3 vaade.py
 ```
 
 1. Kirjuta **Sisendkausta** nimi (hetkel test_pildid) ning lisa ka väljund kaust
@@ -64,22 +86,6 @@ Tulemus salvestatakse faili `test_valmis.jpg`.
 ## Test_pildid kaust
 Kasutusel on pildid www.unsplash.com leheküljelt, kust on võimalik kasutada tasuta pilte, mis ei nõua litsentse.
 Pildi nimetused on jäetud originaalidena.
-
-## Muu
-Nõutud on, et kõik vajalikud failid oleksid saadaval, mistõttu jätame hetkel virtuaalkeskkonna venv .gitignore failist välja, kuid tulevikus eemaldame selle, kuna iga projekti kloonimisel tuleb vajalikud 
-
-### Paigaldamine
-
-Soovitatav on kasutada virtuaalkeskkonda:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-Uues terminalis tuleb enne käivitamist `source venv/bin/activate` uuesti
-käivitada.
-
 
 ## Autorid
 
